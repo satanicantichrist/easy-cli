@@ -12,25 +12,25 @@ public class Command {
         this.name = name;
     }
 
-    void addFlag(Flag flag) {
+    public void addFlag(Flag flag) {
         this.flags.add(flag);
     }
 
-    String getName() {
+    public String getName() {
         return this.name;
     }
 
-    List<Flag> getFlags() {
+    public List<Flag> getFlags() {
         return this.flags;
     }
 
-    Flag getFlag(String name) {
+    public Flag getFlag(String name) {
         for (Flag flag : flags) {
             if (Objects.equals(flag.getNameLong(), name)) return flag;
         }
         return null;
     }
 
-    void onRun() {
+    public void onRun() {
     }
 }
