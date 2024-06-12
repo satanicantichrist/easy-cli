@@ -6,11 +6,23 @@ public class Flag {
     private final char nameShort;
     private Object value;
     private boolean inArgv = false;
+    private String description = "";
 
     public Flag(boolean haveValue, String nameLong, char nameShort) {
         this.haveValue = haveValue;
         this.nameLong = nameLong;
         this.nameShort = nameShort;
+    }
+
+    public Flag(boolean haveValue, String nameLong, char nameShort, String description) {
+        this.haveValue = haveValue;
+        this.nameLong = nameLong;
+        this.nameShort = nameShort;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public boolean isInArgv() {
