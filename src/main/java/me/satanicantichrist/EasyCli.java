@@ -20,20 +20,21 @@ public class EasyCli {
     }
 
     public static void evaluateFlags(Command command, String[] argv) {
-        for (int x = 0; x < argv.length; x++) {
-            if (argv.length > 1) x++;
+        for (int x = 1; x < argv.length; x++) {
             String arg = argv[x];
-            if (!isFlag(arg)) {
-                System.out.println("Unexpected argument: " + arg);
-                return;
-            }
-            Flag flag = getFlag(command, arg);
-            if (flag == null) {
-                System.out.println("Unexpected flag: " + arg);
-                return;
-            }
-            if (flag.isHaveValue()) {
-                if (argv.length <= x + 1) {
+
+            if (isFlag(arg)) {
+                Flag flag = getFlag(command, arg);
+                if (flag == null) {
+                    System.out.println("Unexpected flag: " + arg);
+                    return;
+                }
+                if (!flag.isHaveValue()) {
+                    flag.setInArgv(true);
+                    x++;
+                    continue;
+                }
+                if (x + 1 >= argv.length) {
                     System.out.println("Missing value for flag: " + arg);
                     return;
                 }
@@ -41,12 +42,10 @@ public class EasyCli {
                     System.out.println("Missing value for flag: " + arg);
                     return;
                 }
-
                 flag.setValue(argv[x + 1]);
-
-                x++;
+                flag.setInArgv(true);
+                x += 2;
             }
-            flag.setInArgv(true);
         }
     }
 
