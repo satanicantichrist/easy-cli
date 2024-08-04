@@ -77,6 +77,11 @@ public class EasyCli {
             if (!command.getName().equalsIgnoreCase(argv[0])) continue;
             evaluateFlags(command, argv);
             command.preRun();
+            return;
+        }
+        if (baseCommand.getName().equalsIgnoreCase(argv[0])) {
+            evaluateFlags(baseCommand, argv);
+            baseCommand.preRun();
         }
     }
 
