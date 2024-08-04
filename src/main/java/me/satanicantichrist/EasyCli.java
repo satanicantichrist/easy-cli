@@ -1,6 +1,7 @@
 package me.satanicantichrist;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class EasyCli {
@@ -17,6 +18,18 @@ public class EasyCli {
 
     public static void addCommand(Command command) {
         commands.add(command);
+    }
+
+    public static ArrayList<Command> getCommands() {
+        return commands;
+    }
+
+    public static List<String> getMainHelp() {
+        ArrayList<String> helps = new ArrayList<>();
+        for (Command command : commands) {
+            helps.add(command.getHelp());
+        }
+        return helps;
     }
 
     public static void evaluateFlags(Command command, String[] argv) {
