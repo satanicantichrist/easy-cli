@@ -26,10 +26,10 @@ public class EasyCli {
 
     public static List<String> getMainHelp() {
         ArrayList<String> helps = new ArrayList<>();
+        helps.add(baseCommand.getHelp());
         for (Command command : commands) {
             helps.add(command.getHelp());
         }
-        helps.add(baseCommand.getHelp());
         return helps;
     }
 
