@@ -29,11 +29,12 @@ public class EasyCli {
         for (Command command : commands) {
             helps.add(command.getHelp());
         }
+        helps.add(baseCommand.getHelp());
         return helps;
     }
 
-    public static void evaluateFlags(Command command, String[] argv) {
-        for (int x = 1; x < argv.length; x++) {
+    public static void evaluateFlags(Command command, String[] argv, int startIndex) {
+        for (int x = startIndex; x < argv.length; x++) {
             String arg = argv[x];
 
             if (isFlag(arg)) {
@@ -63,25 +64,25 @@ public class EasyCli {
     }
 
     public static void run(String[] argv) {
+        if(argv.length == 0){
+            System.out.println(getMainHelp());
+            return;
+        }
         //Base command stuff:
         if (isFlag(argv[0])) {
             if (getBaseCommand() == null) {
                 System.out.println("No default command!");
                 return;
             }
-            evaluateFlags(getBaseCommand(), argv);
+            evaluateFlags(getBaseCommand(), argv, 0);
             getBaseCommand().preRun();
             return;
         }
         for (Command command : commands) {
             if (!command.getName().equalsIgnoreCase(argv[0])) continue;
-            evaluateFlags(command, argv);
+            evaluateFlags(command, argv, 1);
             command.preRun();
             return;
-        }
-        if (baseCommand.getName().equalsIgnoreCase(argv[0])) {
-            evaluateFlags(baseCommand, argv);
-            baseCommand.preRun();
         }
     }
 
